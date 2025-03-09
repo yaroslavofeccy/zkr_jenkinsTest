@@ -1,36 +1,54 @@
 pipeline {
-    agent { docker { image 'golang:1.24.0-alpine3.21' } }
+    agent {
+        kubernetes {
+            yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+        containers:
+        - name: golang
+            image: golang:1.24.0-alpine3.21
+            command:
+            - cat
+            tty: true
+'''
+        }
+    }
 
-    stages{
+    stages {
         stage('Checkout') {
-            steps{
-                echo "Checkout"
-
-                checkout scm
+            steps {
+                container('golang') {
+                    echo "Checkout"
+                    checkout scm
+                }
             }
         }
 
         stage('Test') {
-            steps{
-                echo "Test stage"
-
-                sh 'go test ./'
+            steps {
+                container('golang') {
+                    echo "Test stage"
+                    sh 'go test ./'
+                }
             }
         }
 
         stage('Build') {
-            steps{
-                echo "Build step"
-
-                sh 'go build ./'
+            steps {
+                container('golang') {
+                    echo "Build step"
+                    sh 'go build ./'
+                }
             }
         }
 
         stage('Run') {
-            steps{
-                echo "Run step"
-
-                sh 'go run ./'
+            steps {
+                container('golang') {
+                    echo "Run step"
+                    sh 'go run ./'
+                }
             }
         }
     }
