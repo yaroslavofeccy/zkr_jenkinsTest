@@ -20,6 +20,7 @@ spec:
             steps {
                 container('golang') {
                     echo "Checkout"
+
                     checkout scm
                 }
             }
@@ -38,7 +39,8 @@ spec:
             steps {
                 container('golang') {
                     echo "Build step"
-                    sh 'go build ./...'
+
+                    sh 'go build .'
                 }
             }
         }
