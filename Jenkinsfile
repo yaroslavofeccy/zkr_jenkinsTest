@@ -2,15 +2,15 @@ pipeline {
     agent {
         kubernetes {
             yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-        containers:
-        - name: golang
-            image: golang:1.24.0-alpine3.21
-            command:
-            - cat
-            tty: true
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: golang
+    image: golang:1.24.0-alpine3.21
+    command:
+    - cat
+    tty: true
 '''
         }
     }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 container('golang') {
                     echo "Test stage"
-                    sh 'go test ./'
+                    sh 'go test ./...'
                 }
             }
         }
@@ -38,7 +38,7 @@ pipeline {
             steps {
                 container('golang') {
                     echo "Build step"
-                    sh 'go build ./'
+                    sh 'go build ./...'
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 container('golang') {
                     echo "Run step"
-                    sh 'go run ./'
+                    sh 'go run ./main.go'  
                 }
             }
         }
