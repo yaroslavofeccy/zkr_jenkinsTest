@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        go 'go1.24'
+    }
+
     stages{
         stage('Checkout') {
             steps{
@@ -14,7 +18,7 @@ pipeline {
             steps{
                 echo "Test stage"
 
-                go test ./
+                sh 'go test ./'
             }
         }
 
@@ -22,7 +26,15 @@ pipeline {
             steps{
                 echo "Build step"
 
-                go build ./
+                sh 'go build ./'
+            }
+        }
+
+        stage('Run') {
+            steps{
+                echo "Run step"
+
+                sh 'go run ./'
             }
         }
     }
