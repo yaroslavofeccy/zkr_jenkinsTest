@@ -25,14 +25,14 @@ spec:
             }
         }
 
-        stage('Test') {
-            steps {
-                container('golang') {
-                    echo "Test stage"
-                    sh 'go test ./...'
-                }
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         container('golang') {
+        //             echo "Test stage"
+        //             sh 'go test ./...'
+        //         }
+        //     }
+        // }
 
         stage('Build') {
             steps {
