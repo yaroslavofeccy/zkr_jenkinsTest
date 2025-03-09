@@ -3,21 +3,27 @@ pipeline {
 
     stages{
         stage('Checkout') {
-            echo "Checkout step"
+            steps{
+                echo "Checkout"
 
-            checkout scm
+                checkout scm
+            }
         }
 
         stage('Test') {
-            echo "Test stage"
+            steps{
+                echo "Test stage"
 
-            go test ./
+                go test ./
+            }
         }
 
         stage('Build') {
-            echo "Build step"
+            steps{
+                echo "Build step"
 
-            go build ./
+                go build ./
+            }
         }
     }
 }
